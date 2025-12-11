@@ -1,4 +1,4 @@
-module github.com/yourusername/go-api-service
+module github.com/sathwik-aileneni/go-rest-api-boilerplate
 
 go 1.23
 

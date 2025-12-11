@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/yourusername/go-api-service/internal/middleware"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/middleware"
 )
 
 type HealthHandler struct{}

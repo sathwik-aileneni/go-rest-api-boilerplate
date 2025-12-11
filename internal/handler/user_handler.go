@@ -8,9 +8,9 @@ import (
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/yourusername/go-api-service/internal/domain"
-	"github.com/yourusername/go-api-service/internal/middleware"
-	"github.com/yourusername/go-api-service/internal/service"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/domain"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/middleware"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/service"
 )
 
 type UserHandler struct {

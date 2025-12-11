@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/yourusername/go-api-service/internal/domain"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/domain"
 )
 
 type UserRepository interface {

@@ -10,12 +10,12 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/yourusername/go-api-service/internal/config"
-	"github.com/yourusername/go-api-service/internal/handler"
-	"github.com/yourusername/go-api-service/internal/repository"
-	"github.com/yourusername/go-api-service/internal/service"
-	"github.com/yourusername/go-api-service/pkg/database"
-	"github.com/yourusername/go-api-service/pkg/logger"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/config"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/handler"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/repository"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/service"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/pkg/database"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/pkg/logger"
 )
 
 func main() {

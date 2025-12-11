@@ -6,7 +6,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
-	customMiddleware "github.com/yourusername/go-api-service/internal/middleware"
+	customMiddleware "github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/middleware"
 )
 
 func NewRouter(userHandler *UserHandler, healthHandler *HealthHandler, logger *slog.Logger) *chi.Mux {

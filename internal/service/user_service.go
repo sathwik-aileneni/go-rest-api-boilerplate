@@ -6,8 +6,8 @@ import (
 	"errors"
 	"log/slog"
 
-	"github.com/yourusername/go-api-service/internal/domain"
-	"github.com/yourusername/go-api-service/internal/repository"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/domain"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/repository"
 )
 
 type UserService interface {
