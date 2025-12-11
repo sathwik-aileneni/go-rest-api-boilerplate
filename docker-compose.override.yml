@@ -1,0 +1,40 @@
+# docker-compose.override.yml
+# This file automatically extends docker-compose.yml when running `docker compose up`
+# It adds development-specific configurations (hot reload, debugger, code sync)
+
+version: '3.8'
+
+services:
+  # Development overrides for API service
+  api:
+    build:
+      target: development  # Override to use development stage instead of production
+    container_name: go-api-dev
+    ports:
+      - "8080:8080"   # API port
+      - "2345:2345"   # Delve debugger port
+    environment:
+      ENVIRONMENT: development
+      LOG_LEVEL: debug
+    volumes:
+      # Mount source code for live editing and hot reload
+      - ./cmd:/app/cmd
+      - ./internal:/app/internal
+      - ./pkg:/app/pkg
+      - ./go.mod:/app/go.mod
+      - ./go.sum:/app/go.sum
+      - ./.air.toml:/app/.air.toml
+      # Don't mount tmp directory (build artifacts)
+      - /app/tmp
+    restart: "no"  # Don't auto-restart in dev (let Air handle it)
+    healthcheck:
+      disable: true  # Disable health checks in dev
+    security_opt:
+      - "apparmor=unconfined"
+    cap_add:
+      - SYS_PTRACE  # Required for Delve debugger
+
+  # Development overrides for PostgreSQL
+  postgres:
+    container_name: go-api-postgres-dev
+    restart: "no"  # Don't auto-restart in dev

@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: go-api-postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-go_api_db}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - go-api-network
+    restart: unless-stopped
+
+  # Go API Service (Production by default)
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production  # Use production stage by default
+    container_name: go-api-service
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+    environment:
+      SERVER_PORT: "${SERVER_PORT:-8080}"
+      SERVER_HOST: "0.0.0.0"
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_NAME: ${DB_NAME:-go_api_db}
+      DB_SSLMODE: ${DB_SSLMODE:-disable}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - go-api-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres_data:
+
+networks:
+  go-api-network:
+    driver: bridge
