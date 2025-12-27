@@ -17,7 +17,6 @@ main
 .env.prod
 
 # IDE
-.vscode/
 .idea/
 *.swp
 *.swo
