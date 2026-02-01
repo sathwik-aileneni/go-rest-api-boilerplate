@@ -16,6 +16,7 @@ import (
 	"github.com/sathwik-aileneni/go-rest-api-boilerplate/internal/service"
 	"github.com/sathwik-aileneni/go-rest-api-boilerplate/pkg/database"
 	"github.com/sathwik-aileneni/go-rest-api-boilerplate/pkg/logger"
+	"github.com/sathwik-aileneni/go-rest-api-boilerplate/pkg/riverenqueuer"
 )
 
 func main() {
@@ -44,6 +45,13 @@ func main() {
 	}
 	defer db.Close()
 	appLogger.Info("Database connection established")
+
+	// Run River migrations (idempotent - safe on every startup)
+	if err := riverenqueuer.MigrateUp(context.Background(), db); err != nil {
+		appLogger.Error("Failed to run River migrations", "error", err)
+		log.Fatalf("River migration error: %v", err)
+	}
+	appLogger.Info("River migrations completed")
 
 	// Initialize repositories
 	userRepo := repository.NewUserRepository(db)
